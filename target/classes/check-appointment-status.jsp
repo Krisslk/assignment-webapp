@@ -1,3 +1,6 @@
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+    pageEncoding="ISO-8859-1" isELIgnored="false"%>
+<%@ taglib prefix="tag" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -22,6 +25,13 @@
       align-items: center;
       height: 15%;
     }
+
+    .table-container {
+      margin: 0 auto;
+      margin-top: 2%;
+      width: 50%;
+    }
+
   </style>
 </head>
 <body>
@@ -32,13 +42,42 @@
 
   <div class="text-center">
     <form method="post" action="appointments?action=get-appointment-status">
-      <input placeholder="NIC number"  value=""  style="margin-top: 15%; width: 20%;" type="text" name="NICNo">
+      <input placeholder="NIC number"  value=""  style="margin-top: 15%; width: 20%;" type="text"  minlength="10"  name="NICNo">
        <input placeholder="PIN code" value=""  style="margin-top: 15%; width: 8%;" type="text" minlength="4" maxlength="4" name="PINCode">
       <button type="submit" class="btn btn-primary">Check</button>			
     </form>	
+    <a  style="margin-top: 1%;"  href="/webapp" class="btn btn-danger">Go Back</a>	
   </div>
+  
 
+  <div class="table-container">
+    <table class="table table-dark">
+        <tr>
+            <thead>
+                <th>Appointment Id</th>
+                <th>Appointment Date</th>
+                 <th>Test Name</th>
+                 <th>Doctor Name</th>
+                <th>Status</th>
+                <th>Description</th>
+            </thead>
+        </tr>
+
+        <tag:forEach var="appointment" items="${appointmentsList}">
+
+            <tr>
+               	<td>${appointment.getAppointmentId()}</td>
+                <td>${appointment.getAppointment_datetime()}</td>
+                    <td>${appointment.getTestName()}</td>
+                   <td>${appointment.getDoctorName()}</td>
+                 <td>${appointment.getStatus()}</td>
+                 <td>${appointment.getDescription()}</td>
+            </tr>
+
+        </tag:forEach>
+
+    </table>
+  </div>
  
-
 </body>
 </html>

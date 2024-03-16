@@ -4,8 +4,13 @@ public class Appointment {
 	
 	private int appointmentId;
 	private int userId;
+	private int testId;
+	private String testName;
+	private int doctorId;
+	private String doctorName;
 	private String appointment_datetime;
 	private String description;
+	private String status;
 	
 	public Appointment() {
 		
@@ -27,6 +32,38 @@ public class Appointment {
 		this.userId = userId;
 	}
 
+	public int getTestId() {
+		return testId;
+	}
+
+	public void setTestId(int testId) {
+		this.testId = testId;
+	}
+
+	public String getTestName() {
+		return testName;
+	}
+
+	public void setTestName(String testName) {
+		this.testName = testName;
+	}
+
+	public int getDoctorId() {
+		return doctorId;
+	}
+
+	public void setDoctorId(int doctorId) {
+		this.doctorId = doctorId;
+	}
+
+	public String getDoctorName() {
+		return doctorName;
+	}
+
+	public void setDoctorName(String doctorName) {
+		this.doctorName = doctorName;
+	}
+
 	public String getAppointment_datetime() {
 		return appointment_datetime;
 	}
@@ -42,6 +79,15 @@ public class Appointment {
 	public void setDescription(String description) {
 		this.description = description;
 	}
+
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
+	}
+
 	
 	
 

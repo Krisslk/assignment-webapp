@@ -9,7 +9,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.sachinsproject.model.Appointment;
+import com.sachinsproject.model.Doctor;
+import com.sachinsproject.model.Test;
 import com.sachinsproject.service.AppointmentService;
+import com.sachinsproject.service.DoctorService;
+import com.sachinsproject.service.TestService;
 
 
 public class AppointmentController extends HttpServlet{
@@ -21,6 +25,10 @@ public class AppointmentController extends HttpServlet{
     	
     	if(action.equals("view-appointment-status")) {
     		showAppointmentStatusCheckPage(request, response);
+    	}
+    	
+    	if(action.equals("book-appointment")) {
+    		showBookAppointmentkPage(request,response);
     	}
 		
 	}
@@ -46,6 +54,33 @@ public class AppointmentController extends HttpServlet{
 		
 	}
 	
+	private void showBookAppointmentkPage(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException   {
+		
+		String message = "";
+		
+		DoctorService docService = new DoctorService();
+		TestService testService = new TestService();
+		
+		try {
+			
+			List <Doctor> doctorsList = docService.getAllDoctors();
+			List <Test> testsList = testService.getAllTests();
+			
+			request.setAttribute("doctorsList", doctorsList);
+			request.setAttribute("testsList", testsList);
+			
+		} catch (Exception e) {
+			
+			message = e.getMessage();
+			
+		}
+		
+		
+		RequestDispatcher rd = request.getRequestDispatcher("book-appointment.jsp");
+		rd.forward(request, response);
+		
+	}
+	
 	private void getAllCustomerAppointmentStatus(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException   {
 		
 		String message = "";
@@ -56,16 +91,20 @@ public class AppointmentController extends HttpServlet{
 			String NICNo = request.getParameter("NICNo");
 			String PINCode = request.getParameter("PINCode");
 			
-			List <Appointment> appointments = appointmentServ.getAllCustomerAppointmentStatus(NICNo,PINCode);
-			
-			System.out.println(appointments);
+			List <Appointment> appointmentsList = appointmentServ.getAllCustomerAppointmentStatus(NICNo,PINCode);
+
+			request.setAttribute("appointmentsList", appointmentsList);
 			
 		} catch (Exception e) {
 			
-			System.out.println("iwariiiiiiiiiiiii");
+			message = e.getMessage();
 			
 		}
 		
+		request.setAttribute("message",message);
+		
+		RequestDispatcher rd = request.getRequestDispatcher("check-appointment-status.jsp?actions=view-appointment-status");
+		rd.forward(request, response);		
 		
 	}
 	
