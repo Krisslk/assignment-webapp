@@ -20,20 +20,25 @@
       display: flex;
       justify-content: center;
       align-items: center;
-      height: 30%;
+      height: 15%;
     }
   </style>
 </head>
 <body>
 
   <div class="title-container">
-    <h1 style="color: white;margin-top: 30%;" >Welcome to ABC Laboratories</h1>
+    <h1 style="color: white;margin-top: 30%;" >Check your Appointments</h1>
   </div>
 
   <div class="text-center">
-    <a style="margin-top: 10%;" href="#" class="btn btn-danger btn-lg">Book an Appointment</a>
-    <a style="margin-top: 10%;"   href="/webapp/appointments?action=view-appointment-status" class="btn btn-warning btn-lg">Check Appointment Status</a>
+    <form method="post" action="appointments?action=get-appointment-status">
+      <input placeholder="NIC number"  value=""  style="margin-top: 15%; width: 20%;" type="text" name="NICNo">
+       <input placeholder="PIN code" value=""  style="margin-top: 15%; width: 8%;" type="text" minlength="4" maxlength="4" name="PINCode">
+      <button type="submit" class="btn btn-primary">Check</button>			
+    </form>	
   </div>
+
+ 
 
 </body>
 </html>
