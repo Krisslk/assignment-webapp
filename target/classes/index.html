@@ -1,10 +1,39 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>ABC Laboratories</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Welcome to ABC Laboratories</title>
+  <!-- Bootstrap CSS -->
+  <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    body {
+      background-image: url('https://img.freepik.com/free-photo/medicine-blue-background-flat-lay_23-2149341573.jpg'); /* Replace 'background.jpg' with the path to your image */
+      background-size: cover;
+      background-position: center;
+      height: 100vh;
+      margin: 0;
+      padding: 0;
+    }
+
+    .title-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 30%;
+    }
+  </style>
 </head>
 <body>
-    <h1></h1>
-    <a href="/webapp/login" >login to dash</a>
+
+  <div class="title-container">
+    <h1 style="color: white;margin-top: 30%;" >Welcome to ABC Laboratories</h1>
+  </div>
+
+  <div class="text-center">
+    <a style="margin-top: 10%;"  href="/webapp/login" class="btn btn-danger btn-lg">Book an Appointment</a>
+    <a style="margin-top: 10%;"  href="#" class="btn btn-warning btn-lg">Check Appointment Status</a>
+  </div>
+
 </body>
 </html>
