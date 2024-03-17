@@ -3,7 +3,11 @@ package com.sachinsproject.model;
 public class Appointment {
 	
 	private int appointmentId;
-	private int userId;
+	private String NICNo;
+	private String PINCode;
+	private String PatientName;
+	private String PhoneNo;
+	private int CustomerId;
 	private int testId;
 	private String testName;
 	private int doctorId;
@@ -24,12 +28,44 @@ public class Appointment {
 		this.appointmentId = appointmentId;
 	}
 
-	public int getUserId() {
-		return userId;
+	public String getNICNo() {
+		return NICNo;
 	}
 
-	public void setUserId(int userId) {
-		this.userId = userId;
+	public void setNICNo(String nICNo) {
+		NICNo = nICNo;
+	}
+
+	public String getPINCode() {
+		return PINCode;
+	}
+
+	public void setPINCode(String pINCode) {
+		PINCode = pINCode;
+	}
+
+	public String getPatientName() {
+		return PatientName;
+	}
+
+	public void setPatientName(String patientName) {
+		PatientName = patientName;
+	}
+
+	public String getPhoneNo() {
+		return PhoneNo;
+	}
+
+	public void setPhoneNo(String phoneNo) {
+		PhoneNo = phoneNo;
+	}
+
+	public int getCustomerId() {
+		return CustomerId;
+	}
+
+	public void setCustomerId(int customerId) {
+		CustomerId = customerId;
 	}
 
 	public int getTestId() {

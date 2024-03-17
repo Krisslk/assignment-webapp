@@ -42,8 +42,8 @@
 
   <div class="text-center">
     <form method="post" action="appointments?action=get-appointment-status">
-      <input placeholder="NIC number"  value=""  style="margin-top: 15%; width: 20%;" type="text"  minlength="10"  name="NICNo">
-       <input placeholder="PIN code" value=""  style="margin-top: 15%; width: 8%;" type="text" minlength="4" maxlength="4" name="PINCode">
+      <input placeholder="NIC number"  value="" required="required"  style="margin-top: 15%; width: 20%;" type="text"  minlength="10"  name="NICNo">
+       <input placeholder="PIN code" value=""  required="required" style="margin-top: 15%; width: 8%;" type="text" minlength="4" maxlength="4" name="PINCode">
       <button type="submit" class="btn btn-primary">Check</button>			
     </form>	
     <a  style="margin-top: 1%;"  href="/webapp" class="btn btn-danger">Go Back</a>	

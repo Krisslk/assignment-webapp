@@ -22,7 +22,8 @@
       display: flex;
       justify-content: center;
       align-items: center;
-      height: 15%;
+       flex-direction: column; 
+      height: 30vh;
     }
 
 
@@ -30,25 +31,45 @@
 </head>
 <body>
 
+  	<%
+    	Object success = request.getAttribute("successStatus");
+    	Boolean successStatus = false;
+    	if(success!=null){
+    		successStatus = Boolean.parseBoolean(success.toString());
+    	}
+    %>
+
   <div class="title-container">
     <h1 style="color: white;margin-top: 30%;" >Book Appointment</h1>
+     <div>
+      <h4 style="color: yellow;">${message}</h4>
+      <%
+      	if(successStatus){
+      %>
+      	<a  style="margin-top: 2%;"  href="/webapp" class="btn btn-danger">Go Back</a>	
+      <%
+      	}
+      %>
+    </div>
   </div>
 
  <div class="col-md-12">
-    <div class="text-center">
-
+    <div class="text-center">    
+    <%
+    	if (!successStatus) { 
+	%>
         <form method="post" action="appointments?action=book-appointment">
-            <input placeholder="NIC number"  value=""  style="margin-top: 15%; width: 20%;" type="text"  minlength="10"  name="NICNo"><br/>
+            <input placeholder="NIC number" required="required"  value=""  style="margin-top: 10%; width: 20%;" type="text"  minlength="10" maxlength="10"  name="NICNo"><br/>
             <div style="margin-top: 1%;">
                 <span >note down this pin code</span>
                 <input placeholder="PIN code" readonly   style=" width: 5%;" type="text" minlength="4" maxlength="4" name="PINCode"  id="PINCode"><br/>
             </div>
-             <input placeholder="Patient Name" value=""  style="margin-top: 1%; width: 30%;" type="text" minlength="2" maxlength="25" name="PatientName"><br/>
-             <input placeholder="Phone Number" value=""  style="margin-top: 1%; width: 30%;" type="text" minlength="2" maxlength="10" name="PhoneNo"><br/>
-             <textarea  style="margin-top: 1%; width: 30%;" name="desc" placeholder="explain your medicial condition"   ></textarea><br/>
+             <input placeholder="Patient Name" required="required" value=""  style="margin-top: 1%; width: 30%;" type="text" minlength="2" maxlength="25" name="PatientName"><br/>
+             <input placeholder="Phone Number" required="required" value=""  style="margin-top: 1%; width: 30%;" type="text" minlength="2" maxlength="10" name="PhoneNo"><br/>
+             <textarea style="margin-top: 1%;  width: 30%;" name="desc" placeholder="explain your medicial condition"   >sugar test</textarea><br/>
 
              <label>Select a doctor</label>
-            <select style="margin-top: 1%;" name="doctorId">
+            <select required="required" style="margin-top: 1%;" name="doctorId">
             	 <tag:forEach var="doctor" items="${doctorsList}">
                 <option value="${doctor.getDoctorId()}" >${doctor.getDoctorName()}</option>
                 </tag:forEach>
@@ -57,7 +78,7 @@
             <br/>
 
             <label>Select a Test</label>
-            <select style="margin-top: 1%;" name="testId" id="">
+            <select required="required" style="margin-top: 1%;" name="testId" id="">
             	 <tag:forEach var="test" items="${testsList}">
                 <option value="${test.getTestId()}" >${test.getTestName()}</option>
                 </tag:forEach>
@@ -66,11 +87,15 @@
             <br/>
 
             <span>Appointment Date </span>
-            <input placeholder="Appointment Date" value=""  style="margin-top: 1%; width: 15%;" type="date"  name="appointmentDate"><br/>
+            <input required="required" placeholder="Appointment Date" value=""  style="margin-top: 1%; width: 15%;" type="date"  name="appointmentDate"><br/>
 
             <button type="submit" style="margin-top: 2%;" class="btn btn-warning">Book Now</button>	
             <a  style="margin-top: 2%;"  href="/webapp" class="btn btn-danger">Go Back</a>	
           </form>	
+          
+   <%
+    	}
+   %>
 
     </div>
   </div>

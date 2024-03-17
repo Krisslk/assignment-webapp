@@ -27,7 +27,7 @@ public class AppointmentController extends HttpServlet{
     		showAppointmentStatusCheckPage(request, response);
     	}
     	
-    	if(action.equals("book-appointment")) {
+    	if(action.equals("view-book-appointment")) {
     		showBookAppointmentkPage(request,response);
     	}
 		
@@ -42,6 +42,10 @@ public class AppointmentController extends HttpServlet{
 			
 			getAllCustomerAppointmentStatus(request,response);
 			
+		}
+		
+		if(action.equals("book-appointment")) {
+			BookCustomerAppointment(request,response);
 		}
 	}
 	
@@ -95,6 +99,8 @@ public class AppointmentController extends HttpServlet{
 
 			request.setAttribute("appointmentsList", appointmentsList);
 			
+			System.out.println(appointmentsList);
+			
 		} catch (Exception e) {
 			
 			message = e.getMessage();
@@ -104,6 +110,56 @@ public class AppointmentController extends HttpServlet{
 		request.setAttribute("message",message);
 		
 		RequestDispatcher rd = request.getRequestDispatcher("check-appointment-status.jsp?actions=view-appointment-status");
+		rd.forward(request, response);		
+		
+	}
+	
+	
+	private void BookCustomerAppointment(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException   {
+		
+		String message = "";
+		Boolean successStatus = false;
+		
+
+		try {
+			
+	
+			message = "Booking Added Successfully!";
+			successStatus = true;
+		
+			
+		} catch (Exception e) {
+			
+			message = e.getMessage();
+			
+		}
+		
+		if(!successStatus) {
+			
+			DoctorService docService = new DoctorService();
+			TestService testService = new TestService();
+			
+			try {
+				
+				List <Doctor> doctorsList = docService.getAllDoctors();
+				List <Test> testsList = testService.getAllTests();
+				
+				request.setAttribute("doctorsList", doctorsList);
+				request.setAttribute("testsList", testsList);
+				
+			} catch (Exception e) {
+				
+				message = e.getMessage();
+				
+			}
+			
+			
+		}
+		
+		request.setAttribute("successStatus", successStatus);
+		request.setAttribute("message",message);
+		
+		RequestDispatcher rd = request.getRequestDispatcher("book-appointment.jsp");
 		rd.forward(request, response);		
 		
 	}

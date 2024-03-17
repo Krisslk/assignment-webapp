@@ -7,9 +7,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.*;
 
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-
 import com.sachinsproject.model.Appointment;
 
 public class AppointmentManager {
@@ -19,7 +16,7 @@ public class AppointmentManager {
 		DbConnector connector = new DbConnectorImplMySQL();
 		Connection conn = connector.getDbConnection();
 		
-		String query = "select appointments.*,doctors.*,tests.* from users join appointments on users.userID = appointments.userId join doctors on appointments.doctorId = doctors.doctorId join tests on appointments.testId = tests.testID where users.NICNo = ? and users.PINCode = ?";
+		String query = "select appointments.*,doctors.*,tests.* from customers join appointments on customers.customerID = appointments.customerId join doctors on appointments.doctorId = doctors.doctorId join tests on appointments.testId = tests.testID where customers.NICNo = ? and customers.PINCode = ?";
 	
 		PreparedStatement ps = conn.prepareStatement(query);
 	
@@ -31,11 +28,11 @@ public class AppointmentManager {
 		List<Appointment> appointmentsList = new ArrayList<Appointment>();
 		
 		while(rs.next()) {
-			
+									
 			Appointment appointment = new Appointment();
-		
+				
 			appointment.setAppointmentId(rs.getInt("appointmentID"));
-			appointment.setUserId(rs.getInt("userId"));	
+			appointment.setCustomerId(rs.getInt("customerId"));	
 			appointment.setTestId (rs.getInt("testId"));
 			appointment.setTestName (rs.getString("testName"));
 			appointment.setDoctorId (rs.getInt("doctorId"));
@@ -45,12 +42,13 @@ public class AppointmentManager {
 			appointment.setStatus(rs.getString("status"));
 			
 			appointmentsList.add(appointment);
-			
+					
 		}
 		
 		
 		ps.close();
 		conn.close();
+	
 		
 		return appointmentsList;
 
