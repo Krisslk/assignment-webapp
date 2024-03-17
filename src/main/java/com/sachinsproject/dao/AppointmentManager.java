@@ -1,7 +1,7 @@
 package com.sachinsproject.dao;
 
 import java.sql.Connection;
-
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -52,6 +52,98 @@ public class AppointmentManager {
 		
 		return appointmentsList;
 
+	}
+	
+	public static boolean addAppointment(Appointment appointment) throws SQLException, ClassNotFoundException {
+		
+		DbConnector connector = new DbConnectorImplMySQL();
+		Connection conn = connector.getDbConnection();
+		
+		int status = 0;
+		String query2 = "INSERT INTO customers (patientName, NICNo, PINCode, phoneNo) VALUES (?,?,?,?);";
+		
+		ResultSet rs1 = getCustomerFromDBUsingNIC(conn, appointment);
+		
+		if(rs1.next()) {
+			// there is a record for this customer, just add the appointment table
+			
+			Integer customerID = Integer.parseInt(rs1.getString("customerID"));
+			
+			status = insertAppointmentToDB(conn,customerID,appointment);
+				
+		}else {
+			
+			 PreparedStatement ps2 = conn.prepareStatement(query2);
+			 ps2.setString(1,appointment.getPatientName());
+			 ps2.setString(2, appointment.getNICNo());
+			 ps2.setString(3,appointment.getPINCode());
+			 ps2.setString(4,appointment.getPhoneNo());
+			 
+			 ps2.executeUpdate();
+			 
+			 ResultSet rs2 = getCustomerFromDBUsingNIC(conn,appointment);
+			 
+			 if(rs2.next()) {
+				 
+				 Integer customerID = Integer.parseInt(rs2.getString("customerID"));
+				 
+				 status = insertAppointmentToDB(conn,customerID,appointment);
+				 
+				 
+			 }
+			
+		}
+		
+
+		conn.close();
+		
+		return status>0;
+		
+	}
+	
+	
+	private static ResultSet getCustomerFromDBUsingNIC(Connection conn,Appointment appointment) {
+		
+		String query = "select * from customers where NICNo = ?";
+		ResultSet rs = null;
+		
+		try {
+			
+			PreparedStatement ps1 = conn.prepareStatement(query);
+			ps1.setString(1,appointment.getNICNo());
+			rs = ps1.executeQuery();
+			return rs;
+			
+		} catch (Exception e) {
+			
+			return rs;
+		}
+		
+		
+	}
+	
+	private static int insertAppointmentToDB(Connection conn,Integer customerID,Appointment appointment) {
+		
+		String query = "INSERT INTO appointments (customerId, testId, doctorId, appointmentDate, description, status) VALUES (?,?,?,?,?,?)";
+		
+		try {
+			
+			PreparedStatement ps3 = conn.prepareStatement(query);
+			ps3.setInt(1,customerID);
+			ps3.setInt(2,appointment.getTestId());
+			ps3.setInt(3, appointment.getDoctorId());
+			ps3.setString(4,appointment.getAppointment_datetime());
+			ps3.setString(5,appointment.getDescription());
+			ps3.setString(6,"Scheduled");
+			
+			return ps3.executeUpdate();
+			
+		} catch (Exception e) {
+			return 0;
+		}
+		
+		
+		
 	}
 	
 }

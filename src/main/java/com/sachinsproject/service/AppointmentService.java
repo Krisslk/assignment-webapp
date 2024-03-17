@@ -12,4 +12,8 @@ public class AppointmentService {
 		return AppointmentManager.getAllCustomerAppointmentStatus(NICNo,PINCode);
 	}
 	
+	public Boolean addAppointment(Appointment appointment) throws SQLException,ClassNotFoundException  {
+		return AppointmentManager.addAppointment(appointment);
+	}
+	
 }

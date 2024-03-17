@@ -1,6 +1,7 @@
 package com.sachinsproject.controller;
 
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.*;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -119,13 +120,29 @@ public class AppointmentController extends HttpServlet{
 		
 		String message = "";
 		Boolean successStatus = false;
-		
+		Appointment appointment = new Appointment();
+		AppointmentService appointmentServ = new AppointmentService();
 
 		try {
-			
 	
-			message = "Booking Added Successfully!";
-			successStatus = true;
+			appointment.setNICNo(request.getParameter("NICNo"));
+			appointment.setPINCode(request.getParameter("PINCode"));
+			appointment.setPatientName(request.getParameter("PatientName"));
+			appointment.setPhoneNo(request.getParameter("PhoneNo"));
+			appointment.setDescription(request.getParameter("desc"));
+			appointment.setDoctorId(Integer.parseInt(request.getParameter("doctorId")));
+			appointment.setTestId(Integer.parseInt(request.getParameter("testId")));
+			appointment.setAppointment_datetime(request.getParameter("appointmentDate"));
+			
+			Boolean result = appointmentServ.addAppointment(appointment);
+			
+			if(result) {
+				message = "Appointment Added Successfully!";
+				successStatus = true;
+			}else {
+				message = "Unable to Add the appointment, please check your data";
+				successStatus = false;
+			}
 		
 			
 		} catch (Exception e) {
