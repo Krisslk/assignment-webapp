@@ -44,10 +44,12 @@ INSERT INTO doctors (doctorName, phoneNo, medicalId) VALUES
 ('Dr. David Rodriguez', '5678901234', 1005);
 
 
-
-ALTER TABLE appointments ADD CONSTRAINT fk_customer_id FOREIGN KEY (customerId) REFERENCES customers(customerID);
-ALTER TABLE appointments ADD CONSTRAINT fk_test_id FOREIGN KEY (testId) REFERENCES tests(testId);
-ALTER TABLE appointments ADD CONSTRAINT fk_doctor_id FOREIGN KEY (doctorId) REFERENCES doctors(doctorId);
+CREATE TABLE test_results (
+    resultID int not null auto_increment primary key,
+    appointmentID int(55) not null,
+    description longText,
+    userID int(55) not null
+);
 
 
 CREATE TABLE users (
@@ -58,3 +60,11 @@ CREATE TABLE users (
 );
 
 insert into users (username,password,userType) values("saman","think100%","Technician");
+
+ALTER TABLE appointments ADD CONSTRAINT fk_customer_id FOREIGN KEY (customerId) REFERENCES customers(customerID);
+ALTER TABLE appointments ADD CONSTRAINT fk_test_id FOREIGN KEY (testId) REFERENCES tests(testId);
+ALTER TABLE appointments ADD CONSTRAINT fk_doctor_id FOREIGN KEY (doctorId) REFERENCES doctors(doctorId);
+ALTER TABLE test_results ADD CONSTRAINT fk_appointment_id FOREIGN KEY (appointmentID) REFERENCES appointments(appointmentID);
+ALTER TABLE test_results ADD CONSTRAINT fk_user_id FOREIGN KEY (userID) REFERENCES users(userID);
+
+
