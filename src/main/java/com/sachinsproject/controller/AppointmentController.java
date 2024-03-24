@@ -36,52 +36,19 @@ public class AppointmentController extends HttpServlet{
     	
     	if(action.equals("view-dashboard-technician")) {
     		
-    		Login login = new Login();
-    		
-    		 HttpSession session = request.getSession(false);
-    		 login = (Login) session.getAttribute("login");
-    		 
-    		 if (session == null||login == null) {
-    			 
-    			 response.sendRedirect("/webapp/login");	
-    			 
-    		}else {
-    			
-    			String message = "";
-    			AppointmentService appointmentServ = new AppointmentService();
-    			
-    			if(login.getUserID()>0) {
-    				
-    				try {
-    					
-    					List <Appointment> appointmentsList = appointmentServ.getAllAppointments();
-    					
-    					request.setAttribute("appointmentsList", appointmentsList);
-    				
-						
-					} catch (Exception e) {
-						
-						System.out.println(e.getMessage());
-						
-						message = e.getMessage();
-						
-					}
-    				
-    				
-    				request.setAttribute("message", message);
-    				request.setAttribute("username",login.getUsername());
-    				
-    				RequestDispatcher rd = request.getRequestDispatcher("technician-dashboard.jsp");
-    				rd.forward(request, response);	
-    				
-    			}else {
-    				
-    				 response.sendRedirect("/webapp/login");
-    				 
-    			}
-    			
-    		}
+    		showTechnicianDashboard(request,response);
 			
+    	}
+    	
+    	
+    	if(action.equals("view-test-result-form")) {
+    	
+    		showResultAddForm(request,response);	
+    		
+    	}
+    	
+    	if(action.equals("view-test-report")) {
+    		
     	}
 		
 	}
@@ -99,6 +66,10 @@ public class AppointmentController extends HttpServlet{
 		
 		if(action.equals("book-appointment")) {
 			BookCustomerAppointment(request,response);
+		}
+		
+		if(action.equals("add-test-result")) {
+			addTestResults(request,response);
 		}
 	}
 	
@@ -229,6 +200,126 @@ public class AppointmentController extends HttpServlet{
 		
 		RequestDispatcher rd = request.getRequestDispatcher("book-appointment.jsp");
 		rd.forward(request, response);		
+		
+	}
+	
+	
+	
+	private void showTechnicianDashboard(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
+		Login login = new Login();
+		
+		 HttpSession session = request.getSession(false);
+		 login = (Login) session.getAttribute("login");
+		 
+		 if (session == null||login == null) {
+			 
+			 response.sendRedirect("/webapp/login");	
+			 
+		}else {
+			
+			String message = "";
+			AppointmentService appointmentServ = new AppointmentService();
+			
+			if(login.getUserID()>0) {
+				
+				try {
+					
+					List <Appointment> appointmentsList = appointmentServ.getAllAppointments();
+					
+					request.setAttribute("appointmentsList", appointmentsList);
+				
+					
+				} catch (Exception e) {
+					
+					System.out.println(e.getMessage());
+					
+					message = e.getMessage();
+					
+				}
+				
+				
+				request.setAttribute("message", message);
+				request.setAttribute("username",login.getUsername());
+				
+				RequestDispatcher rd = request.getRequestDispatcher("technician-dashboard.jsp");
+				rd.forward(request, response);	
+				
+			}else {
+				
+				 response.sendRedirect("/webapp/login");
+				 
+			}
+			
+		}
+		
+	}
+	
+	
+	private void showResultAddForm(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
+
+		Login login = new Login();
+		String appointmentId = request.getParameter("appointmentId");
+		String testName = request.getParameter("testName");
+		
+		 HttpSession session = request.getSession(false);
+		 login = (Login) session.getAttribute("login");
+		 
+		 if (session == null||login == null||appointmentId == null) {
+			 
+			 response.sendRedirect("/webapp/login");	
+			 
+		}else {
+			
+			request.setAttribute("userId",login.getUserID());
+			request.setAttribute("appointmentId",appointmentId);
+			request.setAttribute("testName", testName);
+			
+			RequestDispatcher rd = request.getRequestDispatcher("add-test-result-form.jsp");
+			rd.forward(request, response);	
+			
+		}
+		
+		
+	}
+	
+	
+	private void addTestResults(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException   {
+		
+		String message = "";
+		Boolean successStatus = false;
+		AppointmentService appointmentServ = new AppointmentService();
+		int userId = Integer.parseInt(request.getParameter("userId"));
+		int appointmentId = Integer.parseInt(request.getParameter("appointmentId"));
+		String resultInpt = request.getParameter("result");
+		String testName = request.getParameter("testName");
+		
+		try {
+			
+			successStatus = appointmentServ.addTestResult(userId,appointmentId,resultInpt);
+			
+			if(successStatus) {
+				response.sendRedirect("/webapp/appointments?action=view-dashboard-technician");
+			}else {
+				message = "something unexpected happen, please check your data";
+				request.setAttribute("message",message);
+			}
+			
+		} catch (Exception e) {
+			message = e.getMessage();
+		}
+		
+		if(!successStatus) {
+			
+			request.setAttribute("userId",userId);
+			request.setAttribute("appointmentId",appointmentId);
+			request.setAttribute("testName", testName);
+			
+			RequestDispatcher rd = request.getRequestDispatcher("add-test-result-form.jsp");
+			rd.forward(request, response);	
+		}
+		
 		
 	}
 	

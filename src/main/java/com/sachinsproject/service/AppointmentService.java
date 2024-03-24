@@ -20,4 +20,8 @@ public class AppointmentService {
 		return AppointmentManager.addAppointment(appointment);
 	}
 	
+	public Boolean addTestResult(int userId,int appointmentId,String result) throws SQLException,ClassNotFoundException  {
+		return AppointmentManager.addTestResult(userId, appointmentId, result);
+	}
+	
 }
