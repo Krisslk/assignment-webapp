@@ -49,6 +49,7 @@ public class AppointmentController extends HttpServlet{
     	
     	if(action.equals("view-test-report")) {
     		
+    		showTestResultReport(request,response);
     	}
 		
 	}
@@ -321,6 +322,27 @@ public class AppointmentController extends HttpServlet{
 		}
 		
 		
+	}
+	
+	private void showTestResultReport(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException   {
+		
+		String message = "";
+		int appointmentId = Integer.parseInt(request.getParameter("appointmentId"));
+		AppointmentService appointmentServ = new AppointmentService();
+		Appointment appointment = new Appointment();
+		
+		try {
+			appointment = appointmentServ.getAppointmentDetails(appointmentId);
+			request.setAttribute("appointment",appointment);
+			RequestDispatcher rd = request.getRequestDispatcher("test-results.jsp");
+			rd.forward(request, response);	
+			
+			
+		} catch (Exception e) {
+			message = e.getMessage();
+		}
+		
+	
 	}
 	
 	

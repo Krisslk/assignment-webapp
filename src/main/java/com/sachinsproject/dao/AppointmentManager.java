@@ -1,7 +1,6 @@
 package com.sachinsproject.dao;
 
 import java.sql.Connection;
-import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -221,6 +220,48 @@ public class AppointmentManager {
 		return status>0;
 		
 	}
+	
+	
+	public static Appointment getAppointmentDetails(int appointmentId) throws SQLException, ClassNotFoundException {
+		
+		DbConnector connector = new DbConnectorImplMySQL();
+		Connection conn = connector.getDbConnection();
+		Appointment appointment = new Appointment();
+		
+		String query = "select appointments.*,doctors.*,tests.*,customers.*,test_results.*,users.* from customers join appointments on customers.customerID = appointments.customerId join doctors on appointments.doctorId = doctors.doctorId join tests on appointments.testId = tests.testID left join test_results on appointments.appointmentID = test_results.appointmentID join users on test_results.userID = users.userID where appointments.appointmentID = ?";
+	
+		PreparedStatement ps = conn.prepareStatement(query);
+		ps.setInt(1, appointmentId);
+	
+		ResultSet rs = ps.executeQuery();
+		
+		while(rs.next()) {
+			
+			appointment.setAppointmentId(rs.getInt("appointmentID"));
+			appointment.setCustomerId(rs.getInt("customerId"));	
+			appointment.setCustomerName(rs.getString("patientName"));	
+			appointment.setTestId (rs.getInt("testId"));
+			appointment.setTestName (rs.getString("testName"));
+			appointment.setDoctorId (rs.getInt("doctorId"));
+			appointment.setDoctorName (rs.getString("doctorName"));
+			appointment.setAppointment_datetime(rs.getString("appointmentDate"));
+			appointment.setDescription(rs.getString("description"));
+			appointment.setStatus(rs.getString("status"));
+			appointment.setTestResultId(rs.getInt("resultID"));
+			appointment.setTestResultCreatedUserId(rs.getInt("userID"));
+			appointment.setTestResultCreatedUserName(rs.getString("username"));
+			appointment.setTestResultDesc(rs.getString("description"));
+			
+			System.out.println(appointment.getTestResultDesc());
+			
+		}
+		
+	
+		return appointment;
+	
+	}
+	
+	
 	
 }
 

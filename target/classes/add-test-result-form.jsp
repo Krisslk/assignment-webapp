@@ -11,7 +11,7 @@
   <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
   <style>
     body {
-      background-image: url('https://image.slidesdocs.com/responsive-images/slides/0-smart-technology-work-report-powerpoint-background_d91c025997__960_540.jpg'); 
+      background-image: url('https://png.pngtree.com/thumb_back/fh260/back_pic/04/44/86/175854eec62dcea.jpg'); 
       background-size: cover;
       background-position: center;
       height: 100vh;

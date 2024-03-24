@@ -18,6 +18,7 @@ public class Appointment {
 	private String status;
 	private int testResultId;
 	private int testResultCreatedUserId;
+	private String testResultCreatedUserName;
 	private String testResultDesc;
 	
 	public Appointment() {
@@ -152,6 +153,14 @@ public class Appointment {
 		this.testResultCreatedUserId = testResultCreatedUserId;
 	}
 
+	public String getTestResultCreatedUserName() {
+		return testResultCreatedUserName;
+	}
+
+	public void setTestResultCreatedUserName(String testResultCreatedUserName) {
+		this.testResultCreatedUserName = testResultCreatedUserName;
+	}
+
 	public String getTestResultDesc() {
 		return testResultDesc;
 	}
@@ -159,7 +168,7 @@ public class Appointment {
 	public void setTestResultDesc(String testResultDesc) {
 		this.testResultDesc = testResultDesc;
 	}
-	
+
 	
 
 }

@@ -12,6 +12,10 @@ public class AppointmentService {
 		return AppointmentManager.getAllCustomerAppointmentStatus(NICNo,PINCode);
 	}
 	
+	public Appointment getAppointmentDetails(int appointmentId) throws SQLException,ClassNotFoundException  {
+		return AppointmentManager.getAppointmentDetails(appointmentId);
+	}
+	
 	public List <Appointment> getAllAppointments() throws SQLException,ClassNotFoundException  {
 		return AppointmentManager.getAllAppointments();
 	}
