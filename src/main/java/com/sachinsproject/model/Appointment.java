@@ -16,6 +16,10 @@ public class Appointment {
 	private String appointment_datetime;
 	private String description;
 	private String status;
+	private int testResultId;
+	private int testResultCreatedUserId;
+	private String testResultCreatedUserName;
+	private String testResultDesc;
 	
 	public Appointment() {
 		
@@ -133,8 +137,38 @@ public class Appointment {
 		this.status = status;
 	}
 
-	
-	
+	public int getTestResultId() {
+		return testResultId;
+	}
+
+	public void setTestResultId(int testResultId) {
+		this.testResultId = testResultId;
+	}
+
+	public int getTestResultCreatedUserId() {
+		return testResultCreatedUserId;
+	}
+
+	public void setTestResultCreatedUserId(int testResultCreatedUserId) {
+		this.testResultCreatedUserId = testResultCreatedUserId;
+	}
+
+	public String getTestResultCreatedUserName() {
+		return testResultCreatedUserName;
+	}
+
+	public void setTestResultCreatedUserName(String testResultCreatedUserName) {
+		this.testResultCreatedUserName = testResultCreatedUserName;
+	}
+
+	public String getTestResultDesc() {
+		return testResultDesc;
+	}
+
+	public void setTestResultDesc(String testResultDesc) {
+		this.testResultDesc = testResultDesc;
+	}
+
 	
 
 }

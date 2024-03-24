@@ -41,8 +41,9 @@
                  <td>${appointment.getDoctorName()}</td>
                  <td>${appointment.getStatus()}</td>
                  <td>${appointment.getDescription()}</td>
-                  <td><a href="" class="btn btn-primary" >Add</a></td>
-                  <td><a href="" class="btn btn-danger" >View</a></td>
+                 <td><a style="${appointment.getTestResultId() == 0 ? '' : 'display:none;'}" href="/webapp/appointments?action=view-test-result-form&appointmentId=${appointment.getAppointmentId()}&testName=${appointment.getTestName()}" class="btn btn-primary" >Add</a></td>
+    			<td><a href="/webapp/appointments?action=view-test-report&appointmentId=${appointment.getAppointmentId()}" class="btn btn-danger"  style="${appointment.getTestResultId() > 0 ? '' : 'display:none;'}" >View</a></td>
+				  
           </tr>
         </tag:forEach>
         </tbody>

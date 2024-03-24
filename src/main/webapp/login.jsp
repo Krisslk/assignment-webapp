@@ -45,8 +45,8 @@
          
             <div style="margin-top: 7%;">
 
-              <input placeholder="Username" required="required" value=""  style="margin-top: 1%; width: 30%;" type="text" minlength="2" maxlength="25" name="TechUsername"><br/>
-              <input placeholder="Password" required="required" value=""  style="margin-top: 1%; width: 30%;" type="password"  minlength="1" maxlength="50" name="TechPass"><br/>
+              <input placeholder="Username" required="required" value="saman"  style="margin-top: 1%; width: 30%;" type="text" minlength="2" maxlength="25" name="TechUsername"><br/>
+              <input placeholder="Password" required="required" value="Think100%"  style="margin-top: 1%; width: 30%;" type="password"  minlength="1" maxlength="50" name="TechPass"><br/>
  
             </div>
              

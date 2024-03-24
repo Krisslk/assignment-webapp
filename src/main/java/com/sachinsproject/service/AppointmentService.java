@@ -12,12 +12,20 @@ public class AppointmentService {
 		return AppointmentManager.getAllCustomerAppointmentStatus(NICNo,PINCode);
 	}
 	
+	public Appointment getAppointmentDetails(int appointmentId) throws SQLException,ClassNotFoundException  {
+		return AppointmentManager.getAppointmentDetails(appointmentId);
+	}
+	
 	public List <Appointment> getAllAppointments() throws SQLException,ClassNotFoundException  {
 		return AppointmentManager.getAllAppointments();
 	}
 	
 	public Boolean addAppointment(Appointment appointment) throws SQLException,ClassNotFoundException  {
 		return AppointmentManager.addAppointment(appointment);
+	}
+	
+	public Boolean addTestResult(int userId,int appointmentId,String result) throws SQLException,ClassNotFoundException  {
+		return AppointmentManager.addTestResult(userId, appointmentId, result);
 	}
 	
 }
