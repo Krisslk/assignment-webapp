@@ -8,6 +8,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import com.sachinsproject.model.Login;
 import com.sachinsproject.service.LoginService;
@@ -16,6 +17,10 @@ public class LoginController extends HttpServlet{
 
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
+		 HttpSession session = request.getSession(false);
+		 session.removeAttribute("login");
+		
 		RequestDispatcher rd = request.getRequestDispatcher("login.jsp");
 		rd.forward(request, response);
 	}
@@ -35,7 +40,12 @@ public class LoginController extends HttpServlet{
 			
 			if(login.getUserID()>0) {
 				
-				
+				   HttpSession session = req.getSession(true);
+				   session.setAttribute("login", login);
+				   
+				   if(login.getUserType().equals("Technician")) {
+					   resp.sendRedirect("/webapp/appointments?action=view-dashboard-technician");
+				   }
 				
 			}else {
 

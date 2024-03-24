@@ -12,6 +12,7 @@ public class Appointment {
 	private String testName;
 	private int doctorId;
 	private String doctorName;
+	private String customerName;
 	private String appointment_datetime;
 	private String description;
 	private String status;
@@ -100,6 +101,14 @@ public class Appointment {
 		this.doctorName = doctorName;
 	}
 
+	public String getCustomerName() {
+		return customerName;
+	}
+
+	public void setCustomerName(String customerName) {
+		this.customerName = customerName;
+	}
+
 	public String getAppointment_datetime() {
 		return appointment_datetime;
 	}
@@ -124,6 +133,7 @@ public class Appointment {
 		this.status = status;
 	}
 
+	
 	
 	
 

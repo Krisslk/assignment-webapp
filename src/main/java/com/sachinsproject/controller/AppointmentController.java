@@ -8,9 +8,11 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import com.sachinsproject.model.Appointment;
 import com.sachinsproject.model.Doctor;
+import com.sachinsproject.model.Login;
 import com.sachinsproject.model.Test;
 import com.sachinsproject.service.AppointmentService;
 import com.sachinsproject.service.DoctorService;
@@ -30,6 +32,56 @@ public class AppointmentController extends HttpServlet{
     	
     	if(action.equals("view-book-appointment")) {
     		showBookAppointmentkPage(request,response);
+    	}
+    	
+    	if(action.equals("view-dashboard-technician")) {
+    		
+    		Login login = new Login();
+    		
+    		 HttpSession session = request.getSession(false);
+    		 login = (Login) session.getAttribute("login");
+    		 
+    		 if (session == null||login == null) {
+    			 
+    			 response.sendRedirect("/webapp/login");	
+    			 
+    		}else {
+    			
+    			String message = "";
+    			AppointmentService appointmentServ = new AppointmentService();
+    			
+    			if(login.getUserID()>0) {
+    				
+    				try {
+    					
+    					List <Appointment> appointmentsList = appointmentServ.getAllAppointments();
+    					
+    					request.setAttribute("appointmentsList", appointmentsList);
+    				
+						
+					} catch (Exception e) {
+						
+						System.out.println(e.getMessage());
+						
+						message = e.getMessage();
+						
+					}
+    				
+    				
+    				request.setAttribute("message", message);
+    				request.setAttribute("username",login.getUsername());
+    				
+    				RequestDispatcher rd = request.getRequestDispatcher("technician-dashboard.jsp");
+    				rd.forward(request, response);	
+    				
+    			}else {
+    				
+    				 response.sendRedirect("/webapp/login");
+    				 
+    			}
+    			
+    		}
+			
     	}
 		
 	}
@@ -100,7 +152,6 @@ public class AppointmentController extends HttpServlet{
 
 			request.setAttribute("appointmentsList", appointmentsList);
 			
-			System.out.println(appointmentsList);
 			
 		} catch (Exception e) {
 			
